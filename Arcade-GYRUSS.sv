@@ -107,7 +107,7 @@ wire [2:0] VOFFS = status[31:29];
 
 ////////////////////   CLOCKS   ///////////////////
 
-wire clk_48M;
+wire clk_48M,sndclk;
 wire clk_hdmi = clk_48M;
 wire clk_sys  = clk_48M;
 
@@ -115,7 +115,8 @@ pll pll
 (
 	.rst(0),
 	.refclk(CLK_50M),
-	.outclk_0(clk_48M)
+	.outclk_0(clk_48M),
+	.outclk_1(sndclk)
 );
 
 ///////////////////////////////////////////////////
@@ -303,7 +304,7 @@ wire [7:0] DSW2 = ~DSW[2];
 
 FPGA_GYRUSS core
 (
-	.MCLK(clk_48M),.RESET(iRST),
+	.MCLK(clk_48M),.SCLK(sndclk),.RESET(iRST),
 	.INP0(INP0),.INP1(INP1),.INP2(INP2),
 	.DSW0(DSW0),.DSW1(DSW1),.DSW2(DSW2),
 	.PH(HPOS),.PV(VPOS),.PCLK(PCLK),.POUT(POUT),

@@ -4,6 +4,7 @@
 module FPGA_GYRUSS
 (
 	input				MCLK,
+	input				SCLK,
 	input				RESET,
 
 	input  [7:0]	INP0,
@@ -80,7 +81,7 @@ GYRUSS_VIDEO video(
 
 
 GYRUSS_SOUND sound(
-	MCLK,RESET,SNDRQ,SNDNO,
+	MCLK,SCLK,RESET,SNDRQ,SNDNO,
 	SND_L,SND_R,
 
 	ROMCL,ROMAD,ROMDT,ROMEN

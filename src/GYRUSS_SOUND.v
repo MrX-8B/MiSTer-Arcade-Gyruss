@@ -3,6 +3,7 @@
 module GYRUSS_SOUND
 (
 	input				MCLK,
+	input				SCLK,
 	input 			RESET,
 
 	input				SNDRQ,
@@ -22,7 +23,7 @@ wire  [7:0] CPUOD;
 wire CPUCL,CPUMR,CPUMW,CPUIR,CPUIW;
 wire CPUIRS;
 
-SNDCGEN2 cgen2(MCLK,CPUCL);
+assign CPUCL = SCLK;
 
 
 wire		  romcs;
@@ -97,34 +98,6 @@ Z80IP sndcpu(
 	.intreq(CPUIRQ),.intrst(CPUIRS),
 	.nmireq(1'b0),.nmirst()
 );
-
-endmodule
-
-
-module SNDCGEN( input in, output reg out );
-// in: 48.0MHz -> out: 14.31818MHz
-reg [6:0] count;
-always @( posedge in ) begin
-	if (count > 7'd48) begin
-		count <= count - 7'd48;
-		out <= ~out;
-	end
-   else count <= count + 7'd71;
-end
-endmodule
-
-
-module SNDCGEN2
-(
-	input  MCLK,
-	output CPUCL
-);
-
-wire CLK14M;
-SNDCGEN cgen(MCLK,CLK14M);
-reg [1:0] clkdiv;
-always @(posedge CLK14M) clkdiv <= clkdiv+1;
-assign CPUCL = clkdiv[1];
 
 endmodule
 
