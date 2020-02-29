@@ -261,10 +261,38 @@ wire [16:0] BG_R = (p2A*64+p2B*64+p2C*64+p3A*64+p3B*64+p3C*64);
 wire [19:0] MixL = SE_L+BG_L;
 wire [19:0] MixR = SE_R+BG_R;
 
+wire [19:0] mL;
+wire [19:0] mR;
+
+wire [16:0] K = 16'd32012;		// 8000Hz LPF
+LPF2 fL(MCLK,SMPCL,K,MixL,mL);
+LPF2 fR(MCLK,SMPCL,K,MixR,mR);
+
 always @(posedge MCLK) begin
-	if (SMPCL) begin
-		SND_L <= {16{MixL[19:16]!=0}}|(MixL[15:0]);
-		SND_R <= {16{MixR[19:16]!=0}}|(MixR[15:0]);
+	if (~SMPCL) begin
+		SND_L <= {16{mL[19:16]!=0}}|(mL[15:0]);
+		SND_R <= {16{mR[19:16]!=0}}|(mR[15:0]);
+	end
+end
+
+endmodule
+
+
+module LPF2
+(
+	input				CLK,
+	input				EN,
+	input [16:0]	K,
+	input [19:0]	INu,
+	
+	output reg [19:0] O
+);
+wire [19:0] I = INu;
+reg  [19:0]	M;
+always @(posedge CLK) begin
+	if (EN) begin
+		M <= (M+(((I-M)*K)/65536))/2;
+		O <= M;
 	end
 end
 
@@ -404,7 +432,7 @@ wire [15:0] I = {3'h0,INu8,5'h0};
 reg  [15:0]	M;
 always @(posedge CLK) begin
 	if (EN) begin
-		M <=(FP==2'b00) ? I : (M+(((I-M)*K)/65536));
+		M <=(FP!=2'b00) ? (M+(((I-M)*K)/65536))/2 : I;
 		O <= M;
 	end
 end

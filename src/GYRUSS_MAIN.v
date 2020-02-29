@@ -80,14 +80,17 @@ DPRAMrw #(10,8) vram(BGCL,BGVA,BGVD[ 7:0]    , CPUCL,CPUAD,CPUOD,CSVRM & CPUMW,V
 // Watch-Dog timer & Latches
 reg [31:0] WDTCN;
 reg  [7:0] LATCH;
+reg  [1:0] SNDRC;
 always @(posedge CPUCL or posedge RESET) begin
 	if (RESET) begin
 		WDTCN <= 0;
-		SNDNO <= 0;
 		LATCH <= 0;
+		SNDNO <= 0;
+		SNDRC <= 0;
 	end
 	else begin
 		if (WRWDT) WDTCN <= 0; else WDTCN <= WDTCN+1;
+		if (WRSRQ) SNDRC <= 2'h2; else SNDRC <= SNDRQ ? (SNDRC-1) : SNDRC;
 		if (WRSNO) SNDNO <= CPUOD;
 		if (WRLAT) LATCH[CPUAD[2:0]] <= CPUOD[0];
 	end
@@ -97,7 +100,7 @@ wire   COINCN0 = LATCH[2];
 wire   COINCN1 = LATCH[3];
 assign FLPV    = LATCH[5];
 
-assign SNDRQ   = WRSRQ;
+assign SNDRQ   = (SNDRC!=0);
 
 // TODO: WDT-RESET
 	
