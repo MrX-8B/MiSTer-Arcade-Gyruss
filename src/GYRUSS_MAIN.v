@@ -45,7 +45,7 @@ always @(posedge MCLK) clkdiv <= clkdiv+1;
 wire [15:0] CPUAD;
 wire  [7:0] CPUID,CPUOD;
 wire			CPUMR,CPUMW;
-wire			CPUCL = clkdiv[3];	// 3.0MHz
+wire			CPUCL = clkdiv[3];	// 3.072MHz
 
 
 // Address decoders
@@ -80,7 +80,7 @@ DPRAMrw #(10,8) vram(BGCL,BGVA,BGVD[ 7:0]    , CPUCL,CPUAD,CPUOD,CSVRM & CPUMW,V
 // Watch-Dog timer & Latches
 reg [31:0] WDTCN;
 reg  [7:0] LATCH;
-reg  [1:0] SNDRC;
+reg  [2:0] SNDRC;
 always @(posedge CPUCL or posedge RESET) begin
 	if (RESET) begin
 		WDTCN <= 0;
@@ -90,7 +90,7 @@ always @(posedge CPUCL or posedge RESET) begin
 	end
 	else begin
 		if (WRWDT) WDTCN <= 0; else WDTCN <= WDTCN+1;
-		if (WRSRQ) SNDRC <= 2'h2; else SNDRC <= SNDRQ ? (SNDRC-1) : SNDRC;
+		if (WRSRQ) SNDRC <= 3'h4; else SNDRC <= SNDRQ ? (SNDRC-1) : SNDRC;
 		if (WRSNO) SNDNO <= CPUOD;
 		if (WRLAT) LATCH[CPUAD[2:0]] <= CPUOD[0];
 	end
@@ -132,7 +132,7 @@ always @(posedge CPUCL or posedge RESET) begin
 	end
 	else begin
 		if ((pNMIMASK^NMIMASK)&~NMIMASK) NMI <= 0;
-		else if (PH<8 && PV==225) NMI <= 1'b1;
+		else if (PH<8 && PV==241) NMI <= 1'b1;
 		pNMIMASK <= NMIMASK;
 	end
 end

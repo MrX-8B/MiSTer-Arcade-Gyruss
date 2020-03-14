@@ -36,7 +36,7 @@ wire       FLPH = SPA2[6];
 wire		  FLPV = SPA2[7];
 
 
-wire [8:0] SPHY = {1'b0,POSY}+SPVP+9'd16;
+wire [8:0] SPHY = {1'b0,POSY}+SPVP;
 wire		  SPHT = &SPHY[7:4];
 
 reg  [3:0] SPLX;

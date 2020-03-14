@@ -76,7 +76,7 @@ module GYRUSS_BG
 );
 
 wire  [8:0] BGHP = PH;
-wire  [8:0] BGVP = PV+16;
+wire  [8:0] BGVP = PV;
 
 assign 		BGVA = {BGVP[7:3]^{5{VFLP}},BGHP[7:3]^{5{VFLP}}};
 
