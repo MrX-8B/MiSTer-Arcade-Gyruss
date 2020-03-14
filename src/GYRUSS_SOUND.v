@@ -23,7 +23,8 @@ wire  [7:0] CPUOD;
 wire CPUCL,CPUMR,CPUMW,CPUIR,CPUIW;
 wire CPUIRS;
 
-assign CPUCL = SCLK;
+sclkgen scgen(MCLK,CPUCL);
+//assign CPUCL = SCLK;
 
 
 wire		  romcs;
@@ -39,18 +40,14 @@ RAM_B #(10) wram(CPUCL,CPUAD[9:0],CPUOD,ramcs & CPUMW,ramdt);
 reg [7:0] sndrno = 0;
 reg       sndreq = 0;
 wire      sndreqrst = RESET|CPUIRS;
-reg		 pSNDRQ = 0;
-always @(posedge CPUCL) begin
-	if (RESET) sndrno <= 0;
+always @(posedge SNDRQ or posedge sndreqrst) begin
 	if (sndreqrst) sndreq <= 1'b0;
 	else begin
-		if ((SNDRQ^pSNDRQ)&SNDRQ) begin
-			sndrno <= SNDNO;
-			sndreq <= 1'b1;
-		end
-		pSNDRQ <= SNDRQ;
+		sndrno <= SNDNO;
+		sndreq <= 1'b1;
 	end
 end
+
 wire snocs = CPUAD[15];
 wire CPUIRQ = sndreq;
 
@@ -99,6 +96,22 @@ Z80IP sndcpu(
 	.nmireq(1'b0),.nmirst()
 );
 
+endmodule
+
+
+/*
+   Clock Generator
+     in: 49151993Hz -> out: 3579545Hz
+*/
+module sclkgen( input in, output reg out );
+reg [8:0] count;
+always @( posedge in ) begin
+        if (count > 9'd393) begin
+                count <= count - 9'd393;
+                out <= ~out;
+        end
+        else count <= count + 9'd67;
+end
 endmodule
 
 
@@ -261,12 +274,8 @@ wire [16:0] BG_R = (p2A*64+p2B*64+p2C*64+p3A*64+p3B*64+p3C*64);
 wire [19:0] MixL = SE_L+BG_L;
 wire [19:0] MixR = SE_R+BG_R;
 
-wire [19:0] mL;
-wire [19:0] mR;
-
-wire [16:0] K = 16'd32012;		// 8000Hz LPF
-LPF2 fL(MCLK,SMPCL,K,MixL,mL);
-LPF2 fR(MCLK,SMPCL,K,MixR,mR);
+wire [19:0] mL = (MixL*358)/256;
+wire [19:0] mR = (MixR*358)/256;
 
 always @(posedge MCLK) begin
 	if (~SMPCL) begin
@@ -368,7 +377,7 @@ endmodule
 
 module FilterCTR
 (
-	input					MCLK,
+	input					MCLK,				// 49.152MHz
 
 	input	 [5:0]	 	F0,
 	input  [7:0]		A0,
@@ -386,12 +395,10 @@ module FilterCTR
 );
 
 reg [9:0] cnt;
-always @(negedge MCLK) begin
-	cnt <= (cnt==999) ? 0 : (cnt+1);
-end
-wire EN  = (cnt==0);
-wire EN2 = (cnt==1);
-assign SCLK = (cnt==2);
+always @(negedge MCLK) cnt <= (cnt+10'd1);
+wire   EN   = (cnt==10'd0);	// 48kHz
+wire   EN2  = (cnt==10'd1);
+assign SCLK = (cnt==10'd2);
 
 wire [15:0] o00,o01,o02,o10,o11,o12;
 LPF f10(MCLK,EN,A1,F1[1:0],o10);
