@@ -60,3 +60,6 @@ How to install:
 Be sure to use the MRA file in "releases" of this repository.
 It does not guarantee the operation when using other MRA files.
 
+
+For those who do not see the screen:
+Try the option of vsync_adjust=0
