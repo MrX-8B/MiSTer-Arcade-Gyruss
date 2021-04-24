@@ -5,8 +5,7 @@
 	<mratimestamp>202002290000</mratimestamp>
 	<year>1983</year>
 	<manufacturer>Konami (Centuri license)</manufacturer>
-	<category>Space</category>
-	<category>Shooter</category>
+	<category>Space / Shooter</category>
 	<rbf>Gyruss</rbf>
     <switches default="00,20,00">
 		<dip bits="8,9"   name="Lives" ids="3,4,5,255"/>
