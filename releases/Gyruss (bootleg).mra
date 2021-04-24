@@ -4,7 +4,7 @@
 	<setname>gyrussb</setname>
 	<mratimestamp>20200229221552</mratimestamp>
 	<year>1983</year>
-	<manufacturer>bootleg?</manufacturer>
+	<manufacturer>bootleg</manufacturer>
 	<category>Space / Shooter</category>
 	<rbf>gyruss</rbf>
 	<switches default="00,40,00">
