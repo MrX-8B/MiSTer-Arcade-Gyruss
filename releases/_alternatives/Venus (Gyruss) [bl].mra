@@ -1,19 +1,19 @@
 <misterromdescription>
-	<name>Gyruss</name>
+	<name>Venus</name>
 	<region></region>
 	<homebrew>no</homebrew>
-	<bootleg>no</bootleg>
-	<version></version>
+	<bootleg>yes</bootleg>
+	<version>Gyruss</version>
 	<alternative></alternative>
 	<platform></platform>
 	<series></series>
 	<year>1983</year>
-	<manufacturer>Konami</manufacturer>
+	<manufacturer>Bootleg</manufacturer>
 	<category>Shooter - Tube</category>
 
-	<setname>gyruss</setname>
+	<setname>venus</setname>
 	<parent>gyruss</parent>
-	<mameversion>0218</mameversion>
+	<mameversion>0219</mameversion>
 	<rbf>gyruss</rbf>
 	<about author="MrX-8B" source="https://github.com/MrX-8B/MiSTer-Arcade-Gyruss" twitter="@MrX_8B" webpage="https://patreon.com/MrX_8B"></about>
 
@@ -22,7 +22,7 @@
 	<flip>no</flip>
 
 	<players>2 (alternating)</players>
-	<joystick>4-way</joystick>
+	<joystick>8-way</joystick>
 	<special_controls></special_controls>
 	<num_buttons>1</num_buttons>
 	<buttons default="A,Start,Select,R" names="Fire,Start 1P,Start 2P,Coin"></buttons>
@@ -37,11 +37,11 @@
 		</switches>
 
 	<rom index="1"></rom>
-	<rom index="0" md5="b32403fa8caffb960f7d7a116b2c5f6f" zip="gyruss.zip">
-		<part crc="c673b43d" name="gyrussk.1"></part>
-		<part crc="a4ec03e4" name="gyrussk.2"></part>
-		<part crc="27454a98" name="gyrussk.3"></part>
-		<part crc="822bF27e" name="gyrussk.9"></part>
+	<rom index="0" md5="294008b88093ae45abbcb22c2c36bdb1" zip="gyruss.zip|venus.zip">
+		<part crc="d030abb1" name="r1"></part>
+		<part crc="dbf65d4d" name="r2"></part>
+		<part crc="db246fcd" name="r3"></part>
+		<part crc="822bf27e" name="gyrussk.9"></part>
 		<part crc="27d8329b" name="gyrussk.4"></part>
 		<part crc="4f22411a" name="gyrussk.5"></part>
 		<part crc="c949db10" name="gyrussk.6"></part>
