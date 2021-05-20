@@ -2,18 +2,18 @@
 	<name>Gyruss</name>
 	<region></region>
 	<homebrew>no</homebrew>
-	<bootleg>no</bootleg>
+	<bootleg>yes</bootleg>
 	<version></version>
-	<alternative></alternative>
+	<alternative>Gyruss</alternative>
 	<platform></platform>
 	<series></series>
 	<year>1983</year>
 	<manufacturer>Konami</manufacturer>
 	<category>Shooter - Tube</category>
 
-	<setname>gyruss</setname>
+	<setname>gyrussb</setname>
 	<parent>gyruss</parent>
-	<mameversion>0218</mameversion>
+	<mameversion>0219</mameversion>
 	<rbf>gyruss</rbf>
 	<about author="MrX-8B" source="https://github.com/MrX-8B/MiSTer-Arcade-Gyruss" twitter="@MrX_8B" webpage="https://patreon.com/MrX_8B"></about>
 
@@ -22,7 +22,7 @@
 	<flip>no</flip>
 
 	<players>2 (alternating)</players>
-	<joystick>4-way</joystick>
+	<joystick>8-way</joystick>
 	<special_controls></special_controls>
 	<num_buttons>1</num_buttons>
 	<buttons default="A,Start,Select,R" names="Fire,Start 1P,Start 2P,Coin"></buttons>
@@ -37,19 +37,19 @@
 		</switches>
 
 	<rom index="1"></rom>
-	<rom index="0" md5="b32403fa8caffb960f7d7a116b2c5f6f" zip="gyruss.zip">
-		<part crc="c673b43d" name="gyrussk.1"></part>
-		<part crc="a4ec03e4" name="gyrussk.2"></part>
-		<part crc="27454a98" name="gyrussk.3"></part>
-		<part crc="822bF27e" name="gyrussk.9"></part>
-		<part crc="27d8329b" name="gyrussk.4"></part>
-		<part crc="4f22411a" name="gyrussk.5"></part>
-		<part crc="c949db10" name="gyrussk.6"></part>
-		<part crc="8e8d388c" name="gyrussk.7"></part>
-		<part crc="47cd1fbc" name="gyrussk.8"></part>
-		<part crc="f4ae1c17" name="gyrussk.1a"></part>
-		<part crc="ba498115" name="gyrussk.2a"></part>
-		<part crc="3f9b5dea" name="gyrussk.3a"></part>
+	<rom index="0" md5="fc849395113db0b518f692173e1ad70b" zip="gyruss.zip|gyrussb.zip">
+		<part crc="6bc21c10" name="1.bin"></part>
+		<part crc="a4ec03e4" name="2.bin"></part>
+		<part crc="27454a98" name="3.bin"></part>
+		<part crc="822bf27e" name="9.bin"></part>
+		<part crc="27d8329b" name="4.bin"></part>
+		<part crc="4f22411a" name="5.bin"></part>
+		<part crc="c949db10" name="6.bin"></part>
+		<part crc="8e8d388c" name="7.bin"></part>
+		<part crc="47cd1fbc" name="8.bin"></part>
+		<part crc="f4ae1c17" name="11.bin"></part>
+		<part crc="ba498115" name="12.bin"></part>
+		<part crc="3f9b5dea" name="13.bin"></part>
 		<part crc="7ed057de" name="gyrussk.pr1"></part>
 		<part crc="de823a81" name="gyrussk.pr2"></part>
 		<part crc="98782db3" name="gyrussk.pr3"></part>
